@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <link href="/src/css/common.css" rel="stylesheet" type="text/css" />
+      <link href="/src/css/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+      <script src="/src/scripts/third-party/jquery-3.1.1.min.js"></script>
+      <script src="/src/scripts/third-party/bootstrap.min.js"></script>
+      <script src="/src/scripts/game.js"></script>
+  </head>
+  <body>
+      <div class="hand spread">
+          {{#each cards}}
+            <div class="card suit{{suit}}">
+                <p>{{value}}</p>
+              </div>
+          {{/each}}
+      </div>
+  </body>
+</html>
