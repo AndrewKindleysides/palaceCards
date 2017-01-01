@@ -41,8 +41,8 @@ body {
   position: relative;
   float: left;
   margin-right: 10px;
-  width: 150px;
-  height: 220px;
+  width: 120px;
+  height: 190px;
   border-radius: 10px;
   background: white;
   -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
@@ -51,30 +51,35 @@ body {
 
 .card p {
   text-align: center;
-  font: 100px/220px Georgia, serif;
+  font: 80px/200px Georgia, serif;
 }
 
+.faceDown {
+  content: url('/src/imgs/cardBack.png');
+  background-repeat: no-repeat;
+  max-width: 100%;
+  max-height: 100%;
+}
 
 .suitdiamonds:before, .suitdiamonds:after {
-content: "♦";
-color: #ff0000;
+  content: "♦";
+  color: #ff0000;
 }
 
 .suithearts:before, .suithearts:after {
-content: "♥";
-color: #ff0000;
+  content: "♥";
+  color: #ff0000;
 }
 
 .suitclubs:before, .suitclubs:after {
-content: "♣";
-color: #000;
+  content: "♣";
+  color: #000;
 }
 
 .suitspades:before, .suitspades:after {
-content: "♠";
-color: #000;
+  content: "♠";
+  color: #000;
 }
-
 
 div[class*='suit']:before {
   position: absolute;
@@ -94,6 +99,8 @@ div[class*='suit']:after {
   cursor: pointer;
 }
 
+
+/*SPREAD*/
 .spread {
   width: 350px;
   height: 250px;
@@ -106,7 +113,7 @@ div[class*='suit']:after {
   left: 0;
   -webkit-transition: top 0.3s ease, left 0.3s ease;
   -moz-transition: top 0.3s ease, left 0.3s ease;
-  transition: top 0.3s ease, left 0.3s ease;
+  -o-transition: top 0.3s ease, left 0.3s ease;
   -ms-transition: top 0.3s ease, left 0.3s ease;
   transition: top 0.3s ease, left 0.3s ease;
 }
@@ -114,7 +121,7 @@ div[class*='suit']:after {
 .spread:hover .suitdiamonds {
   -webkit-transform: rotate(-10deg);
   -moz-transform: rotate(-10deg);
-  transform: rotate(-10deg);
+  -o-transform: rotate(-10deg);
   -ms-transform: rotate(-10deg);
   transform: rotate(-10deg);
 }
@@ -124,7 +131,7 @@ div[class*='suit']:after {
   top: 0px;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
-  transform: rotate(0deg);
+  -o-transform: rotate(0deg);
   -ms-transform: rotate(0deg);
   transform: rotate(0deg);
 }
@@ -134,7 +141,7 @@ div[class*='suit']:after {
   top: 5px;
   -webkit-transform: rotate(10deg);
   -moz-transform: rotate(10deg);
-  transform: rotate(10deg);
+  -o-transform: rotate(10deg);
   -ms-transform: rotate(10deg);
   transform: rotate(10deg);
 }
@@ -144,7 +151,7 @@ div[class*='suit']:after {
   top: 10px;
   -webkit-transform: rotate(20deg);
   -moz-transform: rotate(20deg);
-  transform: rotate(20deg);
+  -o-transform: rotate(20deg);
   -ms-transform: rotate(20deg);
   transform: rotate(20deg);
 }
@@ -154,10 +161,11 @@ div[class*='suit']:after {
   box-shadow: 1px 1px 7px rgba(0,0,0,0.4);
 }
 
+/*GROW*/
 .grow > .card {
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
@@ -167,7 +175,7 @@ div[class*='suit']:after {
   box-shadow: 1px 1px 7px rgba(0,0,0,0.9);
   -webkit-transform: scale(1.05,1.05);
   -moz-transform: scale(1.05,1.05);
-  transform: scale(1.05,1.05);
+  -o-transform: scale(1.05,1.05);
   -ms-transform: scale(1.05,1.05);
   transform: scale(1.05,1.05);
 }

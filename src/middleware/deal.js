@@ -2,7 +2,7 @@ var _ = require('underscore'),
     util = require('util');
 
 
-module.exports = function(deck, noOfPlayers) {
+module.exports = function (deck, noOfPlayers) {
     var state = {
         players: [],
         deck
@@ -30,5 +30,5 @@ module.exports = function(deck, noOfPlayers) {
         }
         state.players.push(player);
     }
-    console.log(state.players.length);
+    return state;
 }

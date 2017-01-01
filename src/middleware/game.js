@@ -5,7 +5,7 @@ var card = require('./card'),
 module.exports = {
     start: function (req, res) {
         var deck = card.newDeck();
-        var board = deal(deck.cards, 4);
-        sendBackHtml(res, deck, 'src/templates/game.hbs');
+        var state = deal(deck.cards, 4);
+        sendBackHtml(res, state, 'src/templates/game.hbs');
     }
 }
