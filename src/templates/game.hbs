@@ -11,17 +11,24 @@
 
 <body>
     <div class='container'>
-      <div class='row top'></div>
+        <div class='row top'></div>
         <div class='row'>
-          <div class='board grow'>
-            <div class="deck card faceDown"></div>
-          </div>
+            <div class='board grow'>
+                <div class="deck card faceDown"></div>
+                {{#if playedCards.length}}
+                    <div class="playedCards card">
+                        <div class="card suit{{playedCards.0.suit}}">
+                            <p id='{{playedCards.0.id}}'>{{playedCards.0.value}}</p>
+                        </div>
+                    </div>
+                {{/if}}
+            </div>
         </div>
-            <span class="player">
+        <span class="player">
         <div class="hand grow row">
             {{#each players.0.hand}}
                 <div class="card suit{{suit}}">
-                    <p>{{value}}</p>
+                    <p id='{{id}}'>{{value}}</p>
                 </div>
             {{/each}}
           </div>

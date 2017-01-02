@@ -6,7 +6,8 @@ module.exports = function (deck, noOfPlayers) {
     var localDeck = deck;
     var state = {
         players: [],
-        deck
+        deck,
+        playedCards: []
     }
 
     for (var i = 0; i < noOfPlayers; i++) {

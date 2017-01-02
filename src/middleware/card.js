@@ -4,6 +4,7 @@ function addSuit(suit) {
     var cards = [];
     for (var i = 1; i <= 13; i++) {
         cards.push({
+            id: suit + '-' + i,
             suit,
             value: i,
             faceUp: false

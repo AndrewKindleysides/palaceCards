@@ -4,6 +4,15 @@ $(document).on('click', '.deck', function () {
     }).then(success, fail);
 });
 
+$(document).on('click', '.hand', function (event) {
+    $.ajax('table/cardPlayed', {
+        method: 'POST',
+        data: {
+            id: event.target.id
+        }
+    }).then(success, fail);
+});
+
 function success(res) {
     location.reload(true);
 }
