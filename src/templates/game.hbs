@@ -10,29 +10,36 @@
 </head>
 
 <body>
-
-    {{#each players}}
-        <span class="player">
-            <div class="hand grow">
-                {{#each hand}}
-                    <div class="card suit{{suit}}">
-                        <p>{{value}}</p>
-                    </div>
-                {{/each}}
-                {{#each table}}
-                  {{#if faceUp}}
-                    <div class="card suit{{suit}}">
-                      <p>{{value}}</p>
-                    </div>
-                  {{else}}
-                    <div class="card faceDown">
-                      </div>
-                  {{/if}}
-
-                {{/each}}
-            </div>
+    <div class='container'>
+      <div class='row top'></div>
+        <div class='row'>
+          <div class='board grow'>
+            <div class="deck card faceDown"></div>
+          </div>
+        </div>
+            <span class="player">
+        <div class="hand grow row">
+            {{#each players.0.hand}}
+                <div class="card suit{{suit}}">
+                    <p>{{value}}</p>
+                </div>
+            {{/each}}
+          </div>
+          <div class='table grow row'>
+            {{#each players.0.table}}
+              {{#if faceUp}}
+                <div class="card suit{{suit}}">
+                  <p>{{value}}</p>
+                </div>
+              {{else}}
+                <div class="card faceDown"></div>
+              {{/if}}
+            {{/each}}
+          </div>
         </span>
-    {{/each}}
+
+    </div>
+    </div>
     </div>
 </body>
 

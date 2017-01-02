@@ -18,6 +18,9 @@ app.use('/src/css', express.static('src/css'));
 app.use('/src/scripts', express.static('src/scripts'));
 
 app.get('/game/start', game.start);
+app.get('/game/reset', game.reset);
+app.get('/game/state', game.state);
+app.get('/game/deck/pickUp', game.pickUp);
 
 app.listen(process.env.PORT || 3000, function () {
     console.log('Listening on http://localhost:' + (process.env.PORT || 3000))

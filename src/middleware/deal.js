@@ -3,6 +3,7 @@ var _ = require('underscore'),
 
 
 module.exports = function (deck, noOfPlayers) {
+    var localDeck = deck;
     var state = {
         players: [],
         deck
@@ -10,25 +11,28 @@ module.exports = function (deck, noOfPlayers) {
 
     for (var i = 0; i < noOfPlayers; i++) {
         var player = {
+            id: i + 1,
             hand: [],
             table: []
         };
 
         for (var p = 0; p <= 9; p++) {
             if (player.hand.length >= 0 && player.hand.length < 3) {
-                player.hand.push(_.first(deck));
-                deck = _.without(deck, _.findWhere(deck, _.first(deck)));
+                player.hand.push(_.first(localDeck));
+                localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
             } else if (player.table.length >= 0 && player.table.length < 3) {
-                player.table.push(_.first(deck));
-                deck = _.without(deck, _.findWhere(deck, _.first(deck)));
+                player.table.push(_.first(localDeck));
+                localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
             } else if (player.table.length >= 3 && player.table.length < 6) {
-                var card = _.first(deck);
+                var card = _.first(localDeck);
                 card.faceUp = true;
                 player.table.push(card);
-                deck = _.without(deck, _.findWhere(deck, _.first(deck)));
+                localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
             }
         }
         state.players.push(player);
     }
+    state.deck = localDeck;
+    console.log(state.deck.length);
     return state;
 }

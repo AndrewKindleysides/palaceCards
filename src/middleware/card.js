@@ -21,7 +21,7 @@ module.exports = {
         var deck = _.union(diamonds, hearts, spades, clubs);
 
         return {
-            cards: _.shuffle(deck)
+            cards: _.shuffle(_.shuffle(_.shuffle(_.shuffle(_.shuffle(_.shuffle(deck))))))
         };
     }
 }
