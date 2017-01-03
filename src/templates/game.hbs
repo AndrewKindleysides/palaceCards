@@ -14,7 +14,8 @@
         <div class='row top'></div>
         <div class='row'>
             <div class='board grow'>
-                <div class="deck card faceDown"></div>
+              {{#if deck.length}}
+                <div class="deck card faceDown"></div>{{/if}}
                 {{#if playedCards.length}}
                     <div class="playedCards card">
                         <div class="card suit{{playedCards.0.suit}}">
@@ -36,10 +37,10 @@
             {{#each players.0.table}}
               {{#if faceUp}}
                 <div class="card suit{{suit}}">
-                  <p>{{value}}</p>
+                  <p id='{{id}}'>{{value}}</p>
                 </div>
               {{else}}
-                <div class="card faceDown"></div>
+                <div id='{{id}}' class="card faceDown"></div>
               {{/if}}
             {{/each}}
           </div>

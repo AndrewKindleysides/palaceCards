@@ -42,9 +42,22 @@ module.exports = {
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
     cardPlayed: function (req, res) {
-        var clickedCard = _.findWhere(state.players[0].hand, req.body);
-        state.players[0].hand = _.without(state.players[0].hand, clickedCard);
-        state.playedCards.unshift(clickedCard);
+        var card = {
+            id: req.body.id
+        };
+
+        if (req.body.source === 'hand') {
+            var clickedCard = _.findWhere(state.players[0].hand, card);
+            state.players[0].hand = _.without(state.players[0].hand, clickedCard);
+            state.playedCards.unshift(clickedCard);
+        }
+
+        if (req.body.source === 'table' && req.body.faceUp && state.players[0].hand.length == 0) {
+            var clickedCard = _.findWhere(state.players[0].table, card);
+            state.players[0].table = _.without(state.players[0].table, clickedCard);
+            state.playedCards.unshift(clickedCard);
+        }
+
         sendBackHtml(res, state, 'src/templates/game.hbs');
     }
 }

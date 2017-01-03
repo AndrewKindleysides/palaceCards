@@ -8,12 +8,39 @@ $(document).on('click', '.deck', function () {
             $.ajax('table/cardPlayed', {
                 method: 'POST',
                 data: {
-                    id: event.target.id
+                    id: event.target.id,
+                    source: 'hand'
                 }
             }).then(success, fail)
         };
 
-    }).on('click', '.playedCards', function () {
+    }).on('click', '.table > .card:not(.faceDown)', function (event) {
+        if (event.target.id) {
+            $.ajax('table/cardPlayed', {
+                method: 'POST',
+                data: {
+                    id: event.target.id,
+                    source: 'table',
+                    faceUp: true
+                }
+            }).then(success, fail)
+        };
+
+    }).on('click', '.table > .faceDown', function (event) {
+        if (event.target.id) {
+            $.ajax('table/cardPlayed', {
+                method: 'POST',
+                data: {
+
+                    id: event.target.id,
+                    source: 'table',
+                    faceUp: false
+                }
+            }).then(success, fail)
+        };
+
+    })
+    .on('click', '.playedCards', function () {
         $.ajax('playedCards/pickUp', {
             method: 'GET'
         }).then(success, fail);
