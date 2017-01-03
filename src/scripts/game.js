@@ -1,18 +1,19 @@
-$(document).on('click', '.deck', function() {
+$(document).on('click', '.deck', function () {
         $.ajax('deck/pickUp', {
             method: 'GET',
         }).then(success, fail);
     })
-    .on('click', '.hand > .card', function(event) {
+    .on('click', '.hand > .card', function (event) {
+        if (event.target.id) {
+            $.ajax('table/cardPlayed', {
+                method: 'POST',
+                data: {
+                    id: event.target.id
+                }
+            }).then(success, fail)
+        };
 
-        $.ajax('table/cardPlayed', {
-            method: 'POST',
-            data: {
-                id: event.target.id
-            }
-        }).then(success, fail);
-
-    }).on('click', '.playedCards', function() {
+    }).on('click', '.playedCards', function () {
         $.ajax('playedCards/pickUp', {
             method: 'GET'
         }).then(success, fail);
