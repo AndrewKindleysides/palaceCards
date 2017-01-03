@@ -52,12 +52,15 @@ module.exports = {
             state.playedCards.unshift(clickedCard);
         }
 
-        if (req.body.source === 'table' && req.body.faceUp && state.players[0].hand.length == 0) {
-            var clickedCard = _.findWhere(state.players[0].table, card);
-            state.players[0].table = _.without(state.players[0].table, clickedCard);
-            state.playedCards.unshift(clickedCard);
+        if (req.body.source === 'table' && state.players[0].hand.length == 0) {
+            if (req.body.faceUp === 'true' || req.body.faceUp === 'false' && state.players[0].table.length <= 3) {
+                var clickedCard = _.findWhere(state.players[0].table, card);
+                state.players[0].table = _.without(state.players[0].table, clickedCard);
+                state.playedCards.unshift(clickedCard);
+            }
         }
 
         sendBackHtml(res, state, 'src/templates/game.hbs');
+
     }
 }
