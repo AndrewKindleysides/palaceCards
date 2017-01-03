@@ -4,15 +4,15 @@ $(document).on('click', '.deck', function() {
     }).then(success, fail);
 });
 
-$(document).on('click', '.hand', function(event) {
-    if (event.target.id) {
-        $.ajax('table/cardPlayed', {
-            method: 'POST',
-            data: {
-                id: event.target.id
-            }
-        }).then(success, fail);
-    }
+$(document).on('click', '.hand > .card', function(event) {
+
+    $.ajax('table/cardPlayed', {
+        method: 'POST',
+        data: {
+            id: event.target.id
+        }
+    }).then(success, fail);
+
 });
 
 $(document).on('click', '.playedCards', function() {
