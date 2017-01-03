@@ -13,6 +13,12 @@ $(document).on('click', '.hand', function (event) {
     }).then(success, fail);
 });
 
+$(document).on('click', '.playedCards', function () {
+    $.ajax('playedCards/pickUp', {
+        method: 'GET'
+    }).then(success, fail);
+});
+
 function success(res) {
     location.reload(true);
 }

@@ -27,6 +27,8 @@ app.get('/game/start', game.start);
 app.get('/game/reset', game.reset);
 app.get('/game/state', game.state);
 app.get('/game/deck/pickUp', game.pickUp);
+app.get('/game/playedCards/pickUp', game.playedCardsPickUp);
+
 app.post('/game/table/cardPlayed', game.cardPlayed);
 
 app.listen(process.env.PORT || 3000, function () {

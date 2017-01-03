@@ -36,6 +36,11 @@ module.exports = {
             res.send(200);
         }
     },
+    playedCardsPickUp: function (req, res) {
+        state.players[0].hand = _.union(state.players[0].hand, state.playedCards);
+        state.playedCards = [];
+        sendBackHtml(res, state, 'src/templates/game.hbs');
+    },
     cardPlayed: function (req, res) {
         var clickedCard = _.findWhere(state.players[0].hand, req.body);
         state.players[0].hand = _.without(state.players[0].hand, clickedCard);
