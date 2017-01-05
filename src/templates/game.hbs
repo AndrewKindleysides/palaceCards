@@ -13,7 +13,7 @@
     <div class='container'>
         <div class='row top'></div>
         <div class='row'>
-            <div class='board grow'>
+            <div class='board grow col-md-4'>
               {{#if deck.length}}
                 <div class="deck card faceDown"></div>{{/if}}
                 {{#if playedCards.length}}
@@ -24,6 +24,11 @@
                     </div>
                 {{/if}}
             </div>
+            {{#if burnDeck.length}}
+            <div class="col-md-2'">
+              <div class='burnDeck card grow'></div>
+            </div>
+            {{/if}}
         </div>
         <span class="player">
         <div class="hand grow row">

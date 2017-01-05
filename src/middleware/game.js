@@ -9,7 +9,7 @@ var gameInProgress = false;
 function newGame() {
     gameInProgress = true;
     deck = card.newDeck().cards;
-    state = deal(deck, 4);
+    state = deal(deck, 1);
 }
 
 module.exports = {
@@ -58,6 +58,18 @@ module.exports = {
                 state.players[0].table = _.without(state.players[0].table, clickedCard);
                 state.playedCards.unshift(clickedCard);
             }
+        }
+
+        if (state.playedCards.length >= 4) {
+            if (state.playedCards[0].value == state.playedCards[1].value &&
+                state.playedCards[1].value == state.playedCards[2].value &&
+                state.playedCards[2].value == state.playedCards[3].value) {
+
+                state.burnDeck = state.playedCards;
+                state.playedCards = [];
+
+            }
+
         }
 
         sendBackHtml(res, state, 'src/templates/game.hbs');
