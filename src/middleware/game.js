@@ -13,21 +13,21 @@ function newGame() {
 }
 
 module.exports = {
-    start: function (req, res) {
+    start: function(req, res) {
         if (!gameInProgress) {
             newGame();
         }
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
-    state: function (req, res) {
+    state: function(req, res) {
         res.send(state);
     },
-    reset: function (req, res) {
+    reset: function(req, res) {
         gameInProgress = false;
         newGame();
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
-    pickUp: function (req, res) {
+    pickUp: function(req, res) {
         if (gameInProgress && state.deck.length > 0) {
             state.players[0].hand.push(_.first(state.deck));
             state.deck = _.without(state.deck, _.findWhere(state.deck, _.first(state.deck)));
@@ -36,20 +36,27 @@ module.exports = {
             res.send(200);
         }
     },
-    playedCardsPickUp: function (req, res) {
+    playedCardsPickUp: function(req, res) {
         state.players[0].hand = _.union(state.players[0].hand, state.playedCards);
         state.playedCards = [];
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
-    cardPlayed: function (req, res) {
+    cardPlayed: function(req, res) {
         var card = {
             id: req.body.id
         };
 
         if (req.body.source === 'hand') {
             var clickedCard = _.findWhere(state.players[0].hand, card);
-            state.players[0].hand = _.without(state.players[0].hand, clickedCard);
-            state.playedCards.unshift(clickedCard);
+            var clickedCards = _.where(state.players[0].hand, {
+                value: clickedCard.value
+            });
+
+            console.dir(clickedCards);
+
+            state.players[0].hand = _.without(state.players[0].hand, clickedCards[0], clickedCards[1]);
+            state.playedCards.unshift(clickedCards[0]);
+            state.playedCards.unshift(clickedCards[1]);
         }
 
         if (req.body.source === 'table' && state.players[0].hand.length == 0) {
