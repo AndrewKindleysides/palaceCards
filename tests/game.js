@@ -22,7 +22,7 @@ describe('picking up a card', function () {
             playedCards: []
         }
 
-        firstCardInTheDeck = deck[0];
+        firstCardInTheDeck = state.deck[0];
         result = rules.pickUp(state);
     });
 
