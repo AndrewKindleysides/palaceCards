@@ -24,7 +24,7 @@ describe('a new deck of cards', function () {
         checkSuit('spades', deck);
     });
 
-    it('has 13 cards of suit doamonds', function () {
+    it('has 13 cards of suit diamonds', function () {
         checkSuit('spades', deck);
     });
 });
