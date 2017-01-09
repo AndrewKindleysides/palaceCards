@@ -4,6 +4,8 @@ $(document).on('click', '.deck', function () {
         }).then(success, fail);
     })
     .on('click', '.hand > .card', function (event) {
+
+        console.log(event.target);
         if (event.target.id) {
             $.ajax('table/cardPlayed', {
                 method: 'POST',
@@ -13,7 +15,6 @@ $(document).on('click', '.deck', function () {
                 }
             }).then(success, fail)
         };
-
     }).on('click', '.table > .card:not(.faceDown)', function (event) {
         if (event.target.id) {
             $.ajax('table/cardPlayed', {
@@ -25,7 +26,6 @@ $(document).on('click', '.deck', function () {
                 }
             }).then(success, fail)
         };
-
     }).on('click', '.table > .faceDown', function (event) {
         if (event.target.id) {
             $.ajax('table/cardPlayed', {
@@ -38,7 +38,6 @@ $(document).on('click', '.deck', function () {
                 }
             }).then(success, fail)
         };
-
     })
     .on('click', '.playedCards', function () {
         $.ajax('playedCards/pickUp', {

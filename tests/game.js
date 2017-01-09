@@ -34,3 +34,31 @@ describe('picking up a card', function () {
         proclaim.equal(result.players[0].hand[0], firstCardInTheDeck);
     });
 });
+
+describe('playing a card on a seven', function () {
+    it('must be less or equal to seven', function () {
+        var player = {
+            id: 1,
+            hand: [{
+                id: 'hearts-8',
+                suit: 'hearts',
+                value: 8,
+                faceUp: false
+            }],
+            table: []
+        };
+
+        state = {
+            players: [player],
+            playedCards: [{
+                id: 'diamonds-7',
+                suit: 'diamonds',
+                value: 7,
+                faceUp: false
+            }]
+        }
+
+        result = rules.cardPlayed('hand', player.hand[0].id, player.hand[0].faceUp, state);
+        proclaim.equal(result, state);
+    });
+});
