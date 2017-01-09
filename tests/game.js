@@ -3,12 +3,12 @@ var proclaim = require('proclaim'),
     card = require('../src/middleware/card'),
     _ = require('underscore');
 
-describe('picking up a card', function () {
+describe('picking up a card', function() {
     var state;
     var firstCardInTheDeck;
     var result;
 
-    before(function () {
+    before(function() {
         var deck = card.newDeck().cards;
         var player = {
             id: 1,
@@ -26,17 +26,17 @@ describe('picking up a card', function () {
         result = rules.pickUp(state);
     });
 
-    it('removes top card from the deck', function () {
+    it('removes top card from the deck', function() {
         proclaim.equal(_.contains(state.deck[0], firstCardInTheDeck), false);
     });
 
-    it('places top card of the deck into the players hand', function () {
+    it('places top card of the deck into the players hand', function() {
         proclaim.equal(result.players[0].hand[0], firstCardInTheDeck);
     });
 });
 
-describe('playing a card on a seven', function () {
-    it('must be less or equal to seven', function () {
+describe('playing a card on a seven', function() {
+    it('must be less or equal to seven', function() {
         var player = {
             id: 1,
             hand: [{
@@ -48,7 +48,7 @@ describe('playing a card on a seven', function () {
             table: []
         };
 
-        state = {
+        var stateIn = {
             players: [player],
             playedCards: [{
                 id: 'diamonds-7',
@@ -56,9 +56,24 @@ describe('playing a card on a seven', function () {
                 value: 7,
                 faceUp: false
             }]
-        }
+        };
 
-        result = rules.cardPlayed('hand', player.hand[0].id, player.hand[0].faceUp, state);
-        proclaim.equal(result, state);
+        var expectedState = {
+            players: [player],
+            playedCards: [{
+                id: 'diamonds-7',
+                suit: 'diamonds',
+                value: 7,
+                faceUp: false
+            }]
+        };
+
+        var card = {
+            id: player.hand[0].id
+        };
+
+        var result = rules.cardPlayed('hand', card, false, stateIn);
+
+        proclaim.equal(result, expectedState);
     });
 });

@@ -6,11 +6,13 @@ module.exports = {
         state.deck = _.without(state.deck, _.findWhere(state.deck, _.first(state.deck)));
         return state;
     },
-    cardPlayed(source, card, faceUp, stateIn) {
-        var state = stateIn;
-
+    cardPlayed(source, card, faceUp, state) {
         if (source === 'hand') {
             var clickedCard = _.findWhere(state.players[0].hand, card);
+
+            if (state.playedCards.length > 0 && state.playedCards[0].value === 7 && clickedCard.value > 7) {
+                return state;
+            }
 
             var clickedCards = _.where(state.players[0].hand, {
                 value: clickedCard.value
