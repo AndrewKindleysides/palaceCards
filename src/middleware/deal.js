@@ -1,14 +1,9 @@
 var _ = require('underscore'),
-    util = require('util');
+    util = require('util'),
+    state = require('./state');
 
-
-module.exports = function(deck, noOfPlayers) {
+module.exports = function (deck, noOfPlayers) {
     var localDeck = deck;
-    var state = {
-        players: [],
-        deck,
-        playedCards: []
-    }
 
     for (var i = 0; i < noOfPlayers; i++) {
         var player = {

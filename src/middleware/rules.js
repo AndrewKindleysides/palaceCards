@@ -1,4 +1,5 @@
-var _ = require('underscore');
+var _ = require('underscore'),
+    newState = require('./state');
 
 module.exports = {
     pickUp(state) {
