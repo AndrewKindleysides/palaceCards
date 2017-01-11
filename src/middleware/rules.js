@@ -8,6 +8,7 @@ module.exports = {
         return state;
     },
     cardPlayed(source, card, faceUp, state) {
+
         if (source === 'hand') {
             var clickedCard = _.findWhere(state.players[0].hand, card);
 
@@ -16,6 +17,15 @@ module.exports = {
             }
 
             if (state.playedCards.length > 0 && state.playedCards[0].value === 3 && clickedCard.value !== 3) {
+                return state;
+            }
+
+            if (state.playedCards.length > 0 && clickedCard.value === 10) {
+
+                state.players[0].hand = _.without(state.players[0].hand, clickedCard);
+                state.playedCards.unshift(clickedCard);
+                state.burnDeck = state.playedCards;
+                state.playedCards = [];
                 return state;
             }
 
@@ -46,7 +56,6 @@ module.exports = {
                 state.playedCards = [];
 
             }
-
         }
 
         return state;
