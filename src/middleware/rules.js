@@ -15,6 +15,10 @@ module.exports = {
                 return state;
             }
 
+            if (state.playedCards.length > 0 && state.playedCards[0].value === 3 && clickedCard.value !== 3) {
+                return state;
+            }
+
             var clickedCards = _.where(state.players[0].hand, {
                 value: clickedCard.value
             });
