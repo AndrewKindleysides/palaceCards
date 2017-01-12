@@ -46,7 +46,7 @@ var two = {
 var noneRuledCards = {
     values: [1, 4, 5, 6, 8, 9, 11, 12, 13],
     rule: function (state, clickedCard) {
-        if (state.playedCards.length > 0 && clickedCard.value > state.playedCards[0].value) {
+        if (state.playedCards.length > 0 && clickedCard.value >= state.playedCards[0].value) {
             playCard(state, clickedCard);
         }
         return state;
