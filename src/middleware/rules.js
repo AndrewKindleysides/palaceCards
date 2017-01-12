@@ -86,14 +86,14 @@ module.exports = {
             }
 
             var validRule = _.filter(rules, function (rule) {
-                if(rule.values != undefined && _.contains(rule.values,clickedCard.value))
-                {
+                if(rule.values != undefined && _.contains(rule.values,clickedCard.value)) {
                     return true;
                 }
-                
+
                 if (rule.clickedCardValue != undefined) {
                     return rule.clickedCardValue != undefined && rule.clickedCardValue === clickedCard.value
                 }
+
                 return rule.lastPlayedCard === state.playedCards[0].value;
             });
 
