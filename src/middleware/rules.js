@@ -33,7 +33,17 @@ var ten = {
     }
 };
 
-var rules = [three, seven, ten];
+var noneRuledCards = {
+    values: [1,4,5,6,8,9,11,12,13],
+    rule: function (state, clickedCard) {
+        if (state.playedCards.length > 0 && clickedCard.value > state.playedCards[0].value) {
+            playCard(state, clickedCard);               
+        }
+        return state;      
+    }
+}
+
+var rules = [three, seven, ten, noneRuledCards];
 
 function playCard(state, clickedCard) {
     state.players[0].hand = _.without(state.players[0].hand, clickedCard);
@@ -66,8 +76,6 @@ module.exports = {
         return state;
     },
     cardPlayed(source, card, faceUp, state) {
-
-
         if (source === 'hand') {
 
             var clickedCard = _.findWhere(state.players[0].hand, card);
@@ -78,14 +86,19 @@ module.exports = {
             }
 
             var validRule = _.filter(rules, function (rule) {
+                if(rule.values != undefined && _.contains(rule.values,clickedCard.value))
+                {
+                    return true;
+                }
+                
                 if (rule.clickedCardValue != undefined) {
                     return rule.clickedCardValue != undefined && rule.clickedCardValue === clickedCard.value
                 }
                 return rule.lastPlayedCard === state.playedCards[0].value;
-            })
+            });
 
             if (validRule.length > 0) {
-                rul[0].rule(state, clickedCard);
+                validRule[0].rule(state, clickedCard);
             } else {
                 playCard(state, clickedCard)
             }
