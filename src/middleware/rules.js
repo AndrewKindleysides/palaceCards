@@ -33,13 +33,23 @@ var ten = {
     }
 };
 
+var two = {
+    clickedCardValue: 2,
+    rule: function (state, clickedCard) {
+        if (state.playedCards.length > 0 && clickedCard.value !== 3) {
+            playCard(state, clickedCard);
+        }
+        return state;
+    }
+};
+
 var noneRuledCards = {
-    values: [1,4,5,6,8,9,11,12,13],
+    values: [1, 4, 5, 6, 8, 9, 11, 12, 13],
     rule: function (state, clickedCard) {
         if (state.playedCards.length > 0 && clickedCard.value > state.playedCards[0].value) {
-            playCard(state, clickedCard);               
+            playCard(state, clickedCard);
         }
-        return state;      
+        return state;
     }
 }
 
@@ -68,7 +78,6 @@ function burnDeck(state) {
 
 }
 
-
 module.exports = {
     pickUp(state) {
         state.players[0].hand.push(_.first(state.deck));
@@ -86,7 +95,7 @@ module.exports = {
             }
 
             var validRule = _.filter(rules, function (rule) {
-                if(rule.values != undefined && _.contains(rule.values,clickedCard.value)) {
+                if (rule.values != undefined && _.contains(rule.values, clickedCard.value)) {
                     return true;
                 }
 

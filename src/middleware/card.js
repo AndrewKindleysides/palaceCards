@@ -24,5 +24,6 @@ module.exports = {
         return {
             cards: _.shuffle(_.shuffle(_.shuffle(_.shuffle(_.shuffle(_.shuffle(deck))))))
         };
-    }
+    },
+    addSuit: addSuit
 }
