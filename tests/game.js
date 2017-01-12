@@ -258,11 +258,11 @@ describe('playing a 10 card', function () {
 });
 
 
-describe('playing a card, with no specific rule', function () {
+describe('playing a normal card with no specific rule', function () {
     var fourHearts;
     var fiveDiamonds;
     var sixHearts;
-    
+
     before(function () {
         fourHearts = {
             id: 'hearts-4',
@@ -319,7 +319,7 @@ describe('playing a card, with no specific rule', function () {
 
         proclaim.deepEqual(result, expectedState);
     });
-    
+
     it('has to be higher than the last played card', function () {
         var playerBefore = {
             id: 1,
@@ -340,7 +340,7 @@ describe('playing a card, with no specific rule', function () {
 
         var expectedState = {
             players: [playerAfter],
-            playedCards: [sixHearts,fiveDiamonds]
+            playedCards: [sixHearts, fiveDiamonds]
         };
 
         var card = {
@@ -351,5 +351,5 @@ describe('playing a card, with no specific rule', function () {
 
         proclaim.deepEqual(result, expectedState);
     });
-    
+
 });
