@@ -113,6 +113,7 @@ module.exports = {
             }
         } else {
             if (source === 'table' && state.players[0].hand.length == 0) {
+                console.dir(card);
                 if (faceUp === 'true' || faceUp === 'false' && state.players[0].table.length <= 3) {
                     var clickedCard = _.findWhere(state.players[0].table, card);
                     state.players[0].table = _.without(state.players[0].table, clickedCard);
