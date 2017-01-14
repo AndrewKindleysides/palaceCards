@@ -45,6 +45,7 @@ module.exports = {
         var card = {
             id: req.body.id
         };
+
         state = rules.cardPlayed(req.body.source, card, req.body.faceUp, state);
         sendBackHtml(res, state, 'src/templates/game.hbs');
 

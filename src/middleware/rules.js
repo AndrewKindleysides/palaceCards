@@ -3,9 +3,9 @@ var _ = require('underscore'),
 
 var three = {
     lastPlayedCard: 3,
-    rule: function (state, clickedCard) {
+    rule: function (state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value === 3) {
-            playCard(state, clickedCard);
+            playCard(state, clickedCard, source);
         }
         return state;
     }
@@ -13,9 +13,9 @@ var three = {
 
 var seven = {
     lastPlayedCard: 7,
-    rule: function (state, clickedCard) {
+    rule: function (state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value <= 7) {
-            playCard(state, clickedCard);
+            playCard(state, clickedCard, source);
         }
         return state;
     }
@@ -23,10 +23,10 @@ var seven = {
 
 var ten = {
     clickedCardValue: 10,
-    rule: function (state, clickedCard) {
+    rule: function (state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value === 10) {
 
-            playCard(state, clickedCard);
+            playCard(state, clickedCard, source);
             burnDeck(state);
             return state;
         }
@@ -35,9 +35,9 @@ var ten = {
 
 var two = {
     clickedCardValue: 2,
-    rule: function (state, clickedCard) {
+    rule: function (state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value !== 3) {
-            playCard(state, clickedCard);
+            playCard(state, clickedCard, source);
         }
         return state;
     }
@@ -45,9 +45,9 @@ var two = {
 
 var noneRuledCards = {
     values: [1, 4, 5, 6, 8, 9, 11, 12, 13],
-    rule: function (state, clickedCard) {
+    rule: function (state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value >= state.playedCards[0].value) {
-            playCard(state, clickedCard);
+            playCard(state, clickedCard, source);
         }
         return state;
     }
@@ -55,8 +55,13 @@ var noneRuledCards = {
 
 var rules = [three, seven, ten, noneRuledCards];
 
-function playCard(state, clickedCard) {
-    state.players[0].hand = _.without(state.players[0].hand, clickedCard);
+function playCard(state, clickedCard, source) {
+    if (source === 'hand') {
+        state.players[0].hand = _.without(state.players[0].hand, clickedCard);
+    } else {
+        state.players[0].table = _.without(state.players[0].table, clickedCard);
+    }
+
     state.playedCards.unshift(clickedCard);
 }
 
@@ -85,12 +90,13 @@ module.exports = {
         return state;
     },
     cardPlayed(source, card, faceUp, state) {
+        faceUp = (faceUp === "true");
         if (source === 'hand') {
 
             var clickedCard = _.findWhere(state.players[0].hand, card);
 
             if (state.playedCards.length === 0) {
-                playCard(state, clickedCard);
+                playCard(state, clickedCard, source);
                 return state;
             }
 
@@ -103,20 +109,36 @@ module.exports = {
                     return rule.clickedCardValue != undefined && rule.clickedCardValue === clickedCard.value
                 }
 
-                return rule.lastPlayedCard === state.playedCards[0].value;
+                return rule.lastPlayedCard === state.playedCards[0].value || state.playedCards.length === 0;
             });
 
             if (validRule.length > 0) {
-                validRule[0].rule(state, clickedCard);
+                validRule[0].rule(state, clickedCard, 'hand');
             } else {
-                playCard(state, clickedCard)
+                playCard(state, clickedCard, source);
             }
         } else {
             if (source === 'table' && state.players[0].hand.length == 0) {
-                if (faceUp === 'true' || faceUp === 'false' && state.players[0].table.length <= 3) {
+                if (faceUp == true || faceUp == false && state.players[0].table.length <= 3) {
                     var clickedCard = _.findWhere(state.players[0].table, card);
-                    state.players[0].table = _.without(state.players[0].table, clickedCard);
-                    state.playedCards.unshift(clickedCard);
+                    var validRule = _.filter(rules, function (rule) {
+                        if (rule.values != undefined && _.contains(rule.values, clickedCard.value)) {
+                            return true;
+                        }
+
+                        if (rule.clickedCardValue != undefined) {
+                            return rule.clickedCardValue != undefined && rule.clickedCardValue === clickedCard.value
+                        }
+
+                        return rule.lastPlayedCard === state.playedCards[0].value || state.playedCards.length === 0;
+                    });
+
+                    if (validRule.length > 0) {
+                        validRule[0].rule(state, clickedCard, 'table');
+                    } else {
+                        state.players[0].table = _.without(state.players[0].table, clickedCard);
+                        state.playedCards.unshift(clickedCard);
+                    }
                 }
             }
         }
