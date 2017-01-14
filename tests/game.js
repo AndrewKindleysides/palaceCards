@@ -709,4 +709,42 @@ describe('the players face down table cards', function () {
     });
 });
 
+describe('playing table cards on a burned Deck', function () {
+    it('works', function () {
+        var cards = card.addSuit('spades');
+
+        cards[5].faceUp = true;
+        cards[7].faceUp = true;
+        cards[8].faceUp = true;
+
+        var playerBefore = {
+            id: 1,
+            hand: [],
+            table: [cards[5], cards[7], cards[8], cards[4], cards[6], cards[1]]
+        };
+
+        var playerAfter = {
+            id: 1,
+            hand: [],
+            table: [cards[7], cards[8], cards[4], cards[6], cards[1]]
+        };
+
+        var stateIn = {
+            players: [playerBefore],
+            playedCards: []
+        };
+
+        var expectedState = {
+            players: [playerAfter],
+            playedCards: [cards[5]]
+        };
+
+        var playedCard = {
+            id: playerBefore.table[0].id
+        };
+
+        var result = rules.cardPlayed('table', playedCard, 'true', stateIn);
+        proclaim.deepEqual(result, expectedState);
+    });
+});
 //playing table card when no cards played due to a burnDeck

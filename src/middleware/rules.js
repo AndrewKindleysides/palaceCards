@@ -121,6 +121,10 @@ module.exports = {
             if (source === 'table' && state.players[0].hand.length == 0) {
                 if (faceUp == true || faceUp == false && state.players[0].table.length <= 3) {
                     var clickedCard = _.findWhere(state.players[0].table, card);
+                    if (state.playedCards.length === 0) {
+                        playCard(state, clickedCard, source);
+                        return state;
+                    }
                     var validRule = _.filter(rules, function (rule) {
                         if (rule.values != undefined && _.contains(rule.values, clickedCard.value)) {
                             return true;
@@ -130,7 +134,7 @@ module.exports = {
                             return rule.clickedCardValue != undefined && rule.clickedCardValue === clickedCard.value
                         }
 
-                        return rule.lastPlayedCard === state.playedCards[0].value || state.playedCards.length === 0;
+                        return rule.lastPlayedCard === state.playedCards[0].value;
                     });
 
                     if (validRule.length > 0) {
