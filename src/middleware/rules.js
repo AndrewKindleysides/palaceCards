@@ -3,7 +3,7 @@ var _ = require('underscore'),
 
 var three = {
     lastPlayedCard: 3,
-    rule: function (state, clickedCard, source) {
+    rule: function(state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value === 3) {
             playCard(state, clickedCard, source);
         }
@@ -13,7 +13,7 @@ var three = {
 
 var seven = {
     lastPlayedCard: 7,
-    rule: function (state, clickedCard, source) {
+    rule: function(state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value <= 7) {
             playCard(state, clickedCard, source);
         }
@@ -23,7 +23,7 @@ var seven = {
 
 var ten = {
     clickedCardValue: 10,
-    rule: function (state, clickedCard, source) {
+    rule: function(state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value === 10) {
 
             playCard(state, clickedCard, source);
@@ -35,7 +35,7 @@ var ten = {
 
 var two = {
     clickedCardValue: 2,
-    rule: function (state, clickedCard, source) {
+    rule: function(state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value !== 3) {
             playCard(state, clickedCard, source);
         }
@@ -45,7 +45,7 @@ var two = {
 
 var noneRuledCards = {
     values: [1, 4, 5, 6, 8, 9, 11, 12, 13],
-    rule: function (state, clickedCard, source) {
+    rule: function(state, clickedCard, source) {
         if (state.playedCards.length > 0 && clickedCard.value >= state.playedCards[0].value) {
             playCard(state, clickedCard, source);
         }
@@ -61,7 +61,6 @@ function playCard(state, clickedCard, source) {
     } else {
         state.players[0].table = _.without(state.players[0].table, clickedCard);
     }
-
     state.playedCards.unshift(clickedCard);
 }
 
@@ -80,7 +79,6 @@ function playAllCardsOfNumber(state, clickedCard) {
 function burnDeck(state) {
     state.burnDeck = state.playedCards;
     state.playedCards = [];
-
 }
 
 module.exports = {
@@ -93,14 +91,12 @@ module.exports = {
         faceUp = (faceUp === "true");
         if (source === 'hand') {
 
-            var clickedCard = _.findWhere(state.players[0].hand, card);
-
             if (state.playedCards.length === 0) {
                 playCard(state, clickedCard, source);
                 return state;
             }
-
-            var validRule = _.filter(rules, function (rule) {
+            var clickedCard = _.findWhere(state.players[0].hand, card);
+            var validRule = _.filter(rules, function(rule) {
                 if (rule.values != undefined && _.contains(rule.values, clickedCard.value)) {
                     return true;
                 }
@@ -119,13 +115,13 @@ module.exports = {
             }
         } else {
             if (source === 'table' && state.players[0].hand.length == 0) {
-                if (faceUp == true || faceUp == false && state.players[0].table.length <= 3) {
-                    var clickedCard = _.findWhere(state.players[0].table, card);
+                var clickedCard = _.findWhere(state.players[0].table, card);
+                if (faceUp == true) {
                     if (state.playedCards.length === 0) {
                         playCard(state, clickedCard, source);
                         return state;
                     }
-                    var validRule = _.filter(rules, function (rule) {
+                    var validRule = _.filter(rules, function(rule) {
                         if (rule.values != undefined && _.contains(rule.values, clickedCard.value)) {
                             return true;
                         }
@@ -142,6 +138,12 @@ module.exports = {
                     } else {
                         state.players[0].table = _.without(state.players[0].table, clickedCard);
                         state.playedCards.unshift(clickedCard);
+                    }
+                } else {
+                    if (faceUp == false && state.players[0].table.length <= 3) {
+                        clickedCard.faceUp = true;
+                        state.players[0].table = _.without(state.players[0].table, clickedCard);
+                        state.players[0].hand.unshift(clickedCard);
                     }
                 }
             }
