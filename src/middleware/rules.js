@@ -81,18 +81,8 @@ function burnDeck(state) {
     state.playedCards = [];
 }
 
-module.exports = {
-    pickUp(state) {
-        state.players[0].hand.push(_.first(state.deck));
-        state.deck = _.without(state.deck, _.findWhere(state.deck, _.first(state.deck)));
-        return state;
-    },
-    cardPlayed(source, card, faceUp, state) {
-        faceUp = (faceUp === "true");
-        if (source === 'hand') {
-            var clickedCard = _.findWhere(state.players[0].hand, card);
-            
-            if (state.playedCards.length === 0) {
+function doMove(state,clickedCard,source) {
+    if (state.playedCards.length === 0) {
                 playCard(state, clickedCard, source);
                 return state;
             }
@@ -110,36 +100,29 @@ module.exports = {
             });
 
             if (validRule.length > 0) {
-                validRule[0].rule(state, clickedCard, 'hand');
+                validRule[0].rule(state, clickedCard, source);
             } else {
                 playCard(state, clickedCard, source);
             }
+}
+
+module.exports = {
+    pickUp(state) {
+        state.players[0].hand.push(_.first(state.deck));
+        state.deck = _.without(state.deck, _.findWhere(state.deck, _.first(state.deck)));
+        return state;
+    },
+    cardPlayed(source, card, faceUp, state) {
+        faceUp = (faceUp === "true");
+        if (source === 'hand') {
+            var clickedCard = _.findWhere(state.players[0].hand, card);
+            
+            doMove(state,clickedCard, source);
         } else {
             if (source === 'table' && state.players[0].hand.length == 0) {
                 var clickedCard = _.findWhere(state.players[0].table, card);
                 if (faceUp == true) {
-                    if (state.playedCards.length === 0) {
-                        playCard(state, clickedCard, source);
-                        return state;
-                    }
-                    var validRule = _.filter(rules, function(rule) {
-                        if (rule.values != undefined && _.contains(rule.values, clickedCard.value)) {
-                            return true;
-                        }
-
-                        if (rule.clickedCardValue != undefined) {
-                            return rule.clickedCardValue != undefined && rule.clickedCardValue === clickedCard.value
-                        }
-
-                        return rule.lastPlayedCard === state.playedCards[0].value;
-                    });
-
-                    if (validRule.length > 0) {
-                        validRule[0].rule(state, clickedCard, 'table');
-                    } else {
-                        state.players[0].table = _.without(state.players[0].table, clickedCard);
-                        state.playedCards.unshift(clickedCard);
-                    }
+                    doMove(state,clickedCard,source)
                 } else {
                     if (faceUp == false && state.players[0].table.length <= 3) {
                         clickedCard.faceUp = true;

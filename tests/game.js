@@ -298,6 +298,7 @@ describe('start of the game', function() {
 
         var result = rules.cardPlayed('hand', playedCard, playerBefore.table[0].faceUp, stateIn);
         proclaim.deepEqual(result, expectedState);
+    });
 });
 
 describe('playing a normal card with no specific rule', function() {
@@ -752,5 +753,5 @@ describe('the players face down table cards', function() {
         proclaim.deepEqual(result, expectedState);
     });
     });
-    });
+    
 
