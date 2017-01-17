@@ -45,7 +45,7 @@ describe('cards of the same value', function() {
             id: playerBefore.hand[0].id
         };
 
-        var result = rules.cardPlayed('hand', card, false, stateIn);
+        var result = rules.cardPlayed('hand', card, false, stateIn, 0);
 
         proclaim.deepEqual(result, expectedState);
     });

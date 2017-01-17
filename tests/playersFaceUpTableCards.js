@@ -67,7 +67,7 @@ describe('the players face up table cards', function() {
             id: playerBefore.table[0].id
         };
 
-        var result = rules.cardPlayed('table', card, true, stateIn);
+        var result = rules.cardPlayed('table', card, true, stateIn, 0);
 
         proclaim.deepEqual(result, expectedState);
     });
@@ -105,7 +105,7 @@ describe('the players face up table cards', function() {
             id: playerBefore.table[0].id
         };
 
-        var result = rules.cardPlayed('table', playedCard, playerBefore.table[0].faceUp, stateIn);
+        var result = rules.cardPlayed('table', playedCard, playerBefore.table[0].faceUp, stateIn, 0);
         proclaim.deepEqual(result, expectedState);
     });
 });

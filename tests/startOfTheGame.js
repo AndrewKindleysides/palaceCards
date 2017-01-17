@@ -41,7 +41,7 @@ describe('start of the game', function() {
             id: playerBefore.hand[0].id
         };
 
-        var result = rules.cardPlayed('hand', playedCard, playerBefore.table[0].faceUp, stateIn);
+        var result = rules.cardPlayed('hand', playedCard, playerBefore.table[0].faceUp, stateIn, 0);
         proclaim.deepEqual(result, expectedState);
     });
 });

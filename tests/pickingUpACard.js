@@ -23,7 +23,7 @@ describe('picking up a card', function() {
         }
 
         firstCardInTheDeck = state.deck[0];
-        result = rules.pickUp(state);
+        result = rules.pickUp(state, 0);
     });
 
     it('removes top card from the deck', function() {
