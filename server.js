@@ -17,6 +17,7 @@ app.use('/src/css', sassMiddleware({
 app.use(bodyParser.urlencoded({
     extended: false
 }))
+
 app.use(bodyParser.json())
 
 app.use('/src/imgs', express.static('src/imgs'));
@@ -31,6 +32,18 @@ app.get('/game/playedCards/pickUp', game.playedCardsPickUp);
 
 app.post('/game/table/cardPlayed', game.cardPlayed);
 
-app.listen(process.env.PORT || 3000, function () {
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket) {
+    socket.emit('news', {
+        hello: 'world'
+    });
+    socket.on('my other event', function(data) {
+        console.log(data);
+    });
+});
+
+server.listen(process.env.PORT || 3000, function() {
     console.log('Listening on http://localhost:' + (process.env.PORT || 3000))
 });
