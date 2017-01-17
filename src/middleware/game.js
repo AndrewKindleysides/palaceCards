@@ -29,15 +29,17 @@ module.exports = {
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
     pickUp: function(req, res) {
+        var player = 0;
         if (gameInProgress && state.deck.length > 0) {
-            state = rules.pickUp(state);
+            state = rules.pickUp(state, player);
             sendBackHtml(res, state, 'src/templates/game.hbs');
         } else {
             res.send(200);
         }
     },
     playedCardsPickUp: function(req, res) {
-        state.players[0].hand = _.union(state.players[0].hand, state.playedCards);
+        var player = 0;
+        state.players[player].hand = _.union(state.players[player].hand, state.playedCards);
         state.playedCards = [];
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
@@ -45,7 +47,7 @@ module.exports = {
         var card = {
             id: req.body.id
         };
-
+        var player = 0;
         state = rules.cardPlayed(req.body.source, card, req.body.faceUp, state, player);
         sendBackHtml(res, state, 'src/templates/game.hbs');
 
