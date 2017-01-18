@@ -1,11 +1,11 @@
-  var socket = io.connect('http://localhost');
-  socket.on('news', function(data) {
-      console.log(data);
-      socket.emit('my other event', {
-          my: 'data'
+  $(document).ready(function() {
+      var socket = io.connect('http://localhost:3000');
+      socket.on('news', function(data) {
+          socket.emit('my other event', {
+              my: 'data'
+          });
       });
   });
-
 
   $(document).on('click', '.deck', function() {
           $.ajax('deck/pickUp', {
