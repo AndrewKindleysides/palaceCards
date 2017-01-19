@@ -2,32 +2,29 @@ var _ = require('underscore'),
     util = require('util'),
     state = require('./state');
 
-module.exports = function (deck, noOfPlayers) {
+module.exports = function (deck, players) {
     var localDeck = deck;
-
-    for (var i = 0; i < noOfPlayers; i++) {
-        var player = {
-            id: i + 1,
-            hand: [],
-            table: []
-        };
-
-        for (var p = 0; p <= 9; p++) {
-            if (player.hand.length >= 0 && player.hand.length < 3) {
-                player.hand.push(_.first(localDeck));
-                localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
-            } else if (player.table.length >= 0 && player.table.length < 3) {
-                player.table.push(_.first(localDeck));
-                localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
-            } else if (player.table.length >= 3 && player.table.length < 6) {
-                var card = _.first(localDeck);
-                card.faceUp = true;
-                player.table.push(card);
-                localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
+    _.each(players, function (player) {
+        for (var i = 0; i < players.length; i++) {
+            for (var p = 0; p <= 9; p++) {
+                if (player.hand.length >= 0 && player.hand.length < 3) {
+                    player.hand.push(_.first(localDeck));
+                    localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
+                } else if (player.table.length >= 0 && player.table.length < 3) {
+                    player.table.push(_.first(localDeck));
+                    localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
+                } else if (player.table.length >= 3 && player.table.length < 6) {
+                    var card = _.first(localDeck);
+                    card.faceUp = true;
+                    player.table.push(card);
+                    localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
+                }
             }
+            state.players.push(player);
         }
-        state.players.push(player);
-    }
+    });
+
     state.deck = localDeck;
+    console.log(state.deck.length);
     return state;
 }

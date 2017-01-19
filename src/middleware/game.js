@@ -14,21 +14,24 @@ function newGame() {
 }
 
 module.exports = {
-    start: function(req, res) {
+    intro: function (req, res) {
+        sendBackHtml(res, state, 'src/templates/intro.hbs');
+    },
+    start: function (req, res) {
         if (!gameInProgress) {
             newGame();
         }
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
-    state: function(req, res) {
+    state: function (req, res) {
         res.send(state);
     },
-    reset: function(req, res) {
+    reset: function (req, res) {
         gameInProgress = false;
         newGame();
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
-    pickUp: function(req, res) {
+    pickUp: function (req, res) {
         var player = 0;
         if (gameInProgress && state.deck.length > 0) {
             state = rules.pickUp(state, player);
@@ -37,13 +40,13 @@ module.exports = {
             res.send(200);
         }
     },
-    playedCardsPickUp: function(req, res) {
+    playedCardsPickUp: function (req, res) {
         var player = 0;
         state.players[player].hand = _.union(state.players[player].hand, state.playedCards);
         state.playedCards = [];
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
-    cardPlayed: function(req, res) {
+    cardPlayed: function (req, res) {
         var card = {
             id: req.body.id
         };

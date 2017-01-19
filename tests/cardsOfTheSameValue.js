@@ -3,8 +3,8 @@ var proclaim = require('proclaim'),
     card = require('../src/middleware/card'),
     _ = require('underscore');
 
-describe('cards of the same value', function() {
-    it('can be played on each other', function() {
+describe('cards of the same value', function () {
+    it('can be played on each other', function () {
         var fourHearts = {
             id: 'hearts-4',
             suit: 'hearts',
