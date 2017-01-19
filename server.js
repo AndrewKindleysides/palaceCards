@@ -6,6 +6,7 @@ var express = require('express'),
     sassMiddleware = require('node-sass-middleware'),
     cssPath = __dirname + '/src/css';
 
+
 app.use(logger('dev'));
 app.use('/src/css', sassMiddleware({
     src: cssPath,
@@ -38,6 +39,8 @@ var io = require('socket.io')(server);
 
 var numUsers = 0;
 
+var players = [];
+
 io.on('connection', function (socket) {
     console.log('a user connected');
 
@@ -56,11 +59,12 @@ io.on('connection', function (socket) {
     // when the client emits 'add user', this listens and executes
     socket.on('add user', function (username) {
         if (addedUser) return;
-
+        console.log(socket.id);
         // we store the username in the socket session for this client
         socket.username = username;
-        ++numUsers;
-        addedUser = true;
+
+        game.addPlayer(socket);
+
         socket.emit('login', {
             numUsers: numUsers
         });
