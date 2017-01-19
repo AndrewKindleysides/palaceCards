@@ -2,9 +2,10 @@ var _ = require('underscore'),
     util = require('util'),
     state = require('./state');
 
-module.exports = function (deck, players) {
+module.exports = function(deck, players) {
     var localDeck = deck;
-    _.each(players, function (player) {
+    var localState = state;
+    _.each(players, function(player) {
         for (var i = 0; i < players.length; i++) {
             for (var p = 0; p <= 9; p++) {
                 if (player.hand.length >= 0 && player.hand.length < 3) {
@@ -20,11 +21,10 @@ module.exports = function (deck, players) {
                     localDeck = _.without(localDeck, _.findWhere(localDeck, _.first(localDeck)));
                 }
             }
-            state.players.push(player);
         }
     });
 
-    state.deck = localDeck;
-    console.log(state.deck.length);
-    return state;
+    localState.players = players;
+    localState.deck = localDeck;
+    return localState;
 }
