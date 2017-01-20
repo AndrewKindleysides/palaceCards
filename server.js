@@ -58,8 +58,8 @@ io.on('connection', function (socket) {
 
     // when the client emits 'add user', this listens and executes
     socket.on('add user', function (username) {
-        if (addedUser) return;
-        console.log(socket.id);
+
+
         // we store the username in the socket session for this client
         socket.username = username;
 
@@ -74,7 +74,9 @@ io.on('connection', function (socket) {
             numUsers: numUsers
         });
     });
-
+    socket.on('card played', function (data) {
+        game.cardPlayedEvent(data);
+    });
     // when the client emits 'typing', we broadcast it to others
     socket.on('typing', function () {
         socket.broadcast.emit('typing', {

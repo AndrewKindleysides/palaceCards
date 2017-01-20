@@ -4,12 +4,12 @@ var proclaim = require('proclaim'),
     card = require('../src/middleware/card'),
     _ = require('underscore');
 
-describe.only('dealing cards', function() {
+describe('dealing cards', function () {
     var playerA;
     var playerB;
     var playerC;
     var playerD;
-    beforeEach(function() {
+    beforeEach(function () {
         playerA = {
             id: 0,
             socketId: 'aabbccdd',
@@ -38,7 +38,7 @@ describe.only('dealing cards', function() {
             table: []
         };
     })
-    it('with 1 player gives cards to each player', function() {
+    it('with 1 player gives cards to each player', function () {
         var deck = card.newDeck().cards;
         var players = [playerA]
         var actual = deal(deck, players);
@@ -49,7 +49,7 @@ describe.only('dealing cards', function() {
         proclaim.equal(actual.deck.length, 43);
 
     });
-    it('with 2 players gives cards to each player', function() {
+    it('with 2 players gives cards to each player', function () {
         var deck = card.newDeck().cards;
         var players = [playerA, playerB]
         var actual = deal(deck, players);
@@ -62,7 +62,7 @@ describe.only('dealing cards', function() {
         proclaim.equal(actual.deck.length, 34);
 
     });
-    it('with 3 players gives cards to each player', function() {
+    it('with 3 players gives cards to each player', function () {
         var deck = card.newDeck().cards;
         var players = [playerA, playerB, playerC]
         var actual = deal(deck, players);
@@ -76,7 +76,7 @@ describe.only('dealing cards', function() {
         proclaim.equal(actual.players.length, 3);
         proclaim.equal(actual.deck.length, 25);
     });
-    it('with 4 players gives cards to each player', function() {
+    it('with 4 players gives cards to each player', function () {
         var deck = card.newDeck().cards;
         var players = [playerA, playerB, playerC, playerD]
         var actual = deal(deck, players);

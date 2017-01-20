@@ -30,6 +30,7 @@ module.exports = {
     },
     reset: function (req, res) {
         gameInProgress = false;
+        players = [];
         newGame();
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
@@ -54,6 +55,21 @@ module.exports = {
         };
         var player = 0;
         state = rules.cardPlayed(req.body.source, card, req.body.faceUp, state, player);
+        sendBackHtml(res, state, 'src/templates/game.hbs');
+    },
+    cardPlayedEvent: function (data) {
+        console.log('in here');
+        var card = {
+            id: data.id
+        };
+        console.dir(data);
+
+        var player = _.findWhere(players, {
+            socketId: data.playerId
+        });
+        console.dir(player);
+        console.dir(players);
+        state = rules.cardPlayed(data.source, card, data.faceUp, state, player.id);
         sendBackHtml(res, state, 'src/templates/game.hbs');
     },
     addPlayer: function (user) {
